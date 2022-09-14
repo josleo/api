@@ -7,7 +7,9 @@ app = FastAPI()
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    list = ["pregunta 1 -- Año con más carreras-- https://henrry-n1.herokuapp.com/tres",
+            "pregunta 1 -- Año con más carreras-- https://henrry-n1.herokuapp.com/tres"]
+    return (list)
 
 
 
