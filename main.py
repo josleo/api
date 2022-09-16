@@ -35,7 +35,7 @@ def  dos():
                                           passwd='F5z!xZ5jhSyg', 
                                           db="educaics_db_estacion" )     
     cur = miConexion.cursor()
-    cur.execute("select  * from pregunta2" )
+    cur.execute("SELECT MAX(gan.driver) as ' carreras ganadas', gan.driverId as piloto, d.name as Nombre FROM (SELECT driverId, COUNT(driverId) as driver FROM results WHERE positionOrder='1' GROUP BY driverId) gan JOIN drivers d  ON (gan.driverId=d.driverId);" )
     datos2 = [row for row in cur.fetchall()]
     miConexion.close()
     return (datos2)
