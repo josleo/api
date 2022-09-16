@@ -6,7 +6,14 @@ drop view if exists pregunta1,pregunta2,pregunta3,pregunta4;
 create view pregunta1 as  select  year , count(year) as cantidad   from  races  group by year order by  cantidad desc limit 1;
 
 -- Piloto con mayor cantidad de primeros puestos
-create view pregunta2 as  select name , count(name) as cantidad  from  races  group by name  order by  cantidad desc limit 1;
+SELECT MAX(gan.driver) as ' carreras ganadas', gan.driverId as piloto, d.name as Nombre 
+       FROM (SELECT driverId, COUNT(driverId) as driver
+             FROM results
+             WHERE positionOrder='1'
+             GROUP BY driverId) gan
+	    JOIN drivers d 
+        ON (gan.driverId=d.driverId);
+
 
 -- Nombre del circuito más corrido
 create view pregunta3 as  SELECT count(r.circuitId) as cantidad , c.name FROM races r inner JOIN circuits c ON c.circuitId = r.circuitId  group  by r.circuitId order by  cantidad desc limit 1;
