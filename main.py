@@ -68,3 +68,20 @@ def  cuatro():
     datos4 = [row for row in cur.fetchall()]
     miConexion.close()
     return (datos4)
+
+@app.get("/europa")
+def  uno():
+    db = mysql.connector.connect(host='database-1.cmmt68xsoykx.us-east-1.rds.amazonaws.com',
+                                        user='admin',
+                                        passwd='123456789',
+                                        db='sys',
+                                        port=3306)
+
+   
+# This line is that you need
+    cursor = db.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM europa ")
+    result = cursor.fetchall()
+    datos= (f"europa: {json.dumps(result)}")
+    db.close()
+    return (datos)
