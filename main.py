@@ -4,6 +4,10 @@ from fastapi import FastAPI
 import mysql.connector
 app = FastAPI()
 
+database_username = 'admin'
+database_password = '123456789'
+database_ip       = 'database-1.cmmt68xsoykx.us-east-1.rds.amazonaws.com'
+database_name     = 'Tabla_prueba'
 
 @app.get("/")
 def read_root():
@@ -85,3 +89,20 @@ def  uno():
     datos= (f"europa: {json.dumps(result)}")
     db.close()
     return (datos)
+
+@app.get("/paises")
+def  uno():
+
+    miConexion = mysql.connector.connect( host=database_ip, user= database_username, passwd=database_password, db=database_name )
+    cur = miConexion.cursor()
+    cur.execute("select * from tb_paises")
+    pais = []
+    datos  = cur.fetchall()
+    for  fila  in datos :
+        paises = {'id_paises':fila[0],'country':fila[1],'id_continente':fila[2]}
+        pais.append(paises) 
+    miConexion.close()
+
+    return json({'paises':pais})
+
+
